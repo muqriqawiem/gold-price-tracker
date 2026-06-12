@@ -826,7 +826,7 @@ async function fetchLiveData() {
     const xauUsd = usdData.price; /* e.g. 4056.27 */
 
     /* Price in MYR — exchangeRate field = USD/MYR conversion rate used */
-    let usdMyr = 4.47; /* fallback if MYR call fails */
+    let usdMyr = 4.06; /* fallback if MYR call fails */
     let xauMyr = xauUsd * usdMyr;
     if (myrRes.ok) {
       const myrData = await myrRes.json();

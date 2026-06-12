@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -72,8 +71,6 @@ body { min-height: 100vh; overflow-x: hidden; }
 .metric-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
 
 /* ── GRID ── */
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
-@media(max-width:700px){ .grid2 { grid-template-columns: 1fr; } }
 
 /* ── PANE ── */
 .pane { background: var(--surface); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; }
@@ -81,11 +78,6 @@ body { min-height: 100vh; overflow-x: hidden; }
 .pane-title svg { width: 14px; height: 14px; color: var(--gold); }
 
 /* ── CHART ── */
-.chart-tabs { display: flex; gap: 4px; margin-bottom: 1rem; }
-.ctab { font-size: 11px; padding: 3px 10px; border-radius: 5px; border: 0.5px solid var(--dim); background: transparent; color: var(--muted); cursor: pointer; font-family: 'Inter', sans-serif; transition: all .15s; }
-.ctab.active { background: var(--gold); color: var(--vault); font-weight: 600; border-color: var(--gold); }
-.ctab:hover:not(.active) { border-color: var(--gold-lo); color: var(--gold-lo); }
-.chart-wrap { position: relative; width: 100%; height: 220px; }
 
 /* ── ALERTS ── */
 .alert-form { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 1rem; }
@@ -107,13 +99,6 @@ body { min-height: 100vh; overflow-x: hidden; }
 .rm-btn:hover { color: var(--dn); }
 
 /* ── INSIGHTS ── */
-.insight { padding: 1rem 1.1rem; border-radius: 8px; background: var(--panel); margin-bottom: 8px; border-left: 2px solid var(--gold-lo); }
-.insight:last-child { margin-bottom: 0; }
-.insight-tag { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 5px; }
-.insight-tag.trend { color: var(--gold-hi); }
-.insight-tag.support { color: #88BBFF; }
-.insight-tag.macro { color: var(--muted); }
-.insight-text { font-size: 12.5px; color: var(--text); line-height: 1.65; }
 
 /* ── FOOTER ── */
 .footer { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 0.5px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
@@ -335,45 +320,21 @@ body { min-height: 100vh; overflow-x: hidden; }
     </div>
   </div>
 
-  <!-- CHART + ALERTS -->
-  <div class="grid2">
-    <div class="pane">
-      <div class="pane-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        Price chart · MYR/gram
-      </div>
-      <div class="chart-tabs">
-        <button class="ctab active" onclick="setRange('1d',this)">1D</button>
-        <button class="ctab" onclick="setRange('1w',this)">1W</button>
-        <button class="ctab" onclick="setRange('1m',this)">1M</button>
-        <button class="ctab" onclick="setRange('3m',this)">3M</button>
-      </div>
-      <div class="chart-wrap"><canvas id="gc" role="img" aria-label="Gold price per gram in MYR">Gold price chart</canvas></div>
-    </div>
-    <div class="pane">
-      <div class="pane-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-        Price alerts
-      </div>
-      <div class="alert-form">
-        <input type="number" id="ap" placeholder="RM / gram" step="0.01"/>
-        <select id="ad">
-          <option value="above">↑ Rises above</option>
-          <option value="below">↓ Falls below</option>
-        </select>
-        <button class="add-btn" onclick="addAlert()">+ Add</button>
-      </div>
-      <div id="al"><p class="alert-empty">No alerts set. Enter a target price above.</p></div>
-    </div>
-  </div>
-
-  <!-- INSIGHTS -->
-  <div class="pane" style="margin-top:1rem">
+  <!-- ALERTS (full width) -->
+  <div class="pane">
     <div class="pane-title">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      Pattern analysis · data-derived
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      Price alerts
     </div>
-    <div id="ins"><div style="font-size:13px;color:var(--muted);padding:.5rem 0">Calculating...</div></div>
+    <div class="alert-form">
+      <input type="number" id="ap" placeholder="RM / gram" step="0.01"/>
+      <select id="ad">
+        <option value="above">↑ Rises above</option>
+        <option value="below">↓ Falls below</option>
+      </select>
+      <button class="add-btn" onclick="addAlert()">+ Add</button>
+    </div>
+    <div id="al"><p class="alert-empty">No alerts set. Enter a target price above.</p></div>
   </div>
 
   <!-- FOOTER -->
@@ -716,9 +677,6 @@ let MARKET = { xau_usd: 0, usd_myr: 0, open_usd: 0, high_usd: 0, low_usd: 0, dat
 
 let state = {};
 let alerts = [];
-let chartInst = null;
-let range = '1d';
-let hist = {};
 let toastTimer = null;
 
 /* ════════════════════════════════════════════════
@@ -883,10 +841,7 @@ async function fetchLiveData() {
 
     calcAll();
     renderMetrics();
-    buildHist();
-    buildChart(range);
     checkAlerts();
-    renderInsights();
     setLoadingState(false);
     showToast('Live · Au999.9 RM ' + state.gram.toFixed(2) + '/g · ' + nowDate.toLocaleTimeString('en-MY'));
 
@@ -931,61 +886,6 @@ function renderMetrics() {
   document.getElementById('m-hi').textContent = 'RM ' + s.high_g.toFixed(2);
   document.getElementById('m-lo').textContent = 'RM ' + s.low_g.toFixed(2);
   document.getElementById('m-op').textContent = 'RM ' + s.open_g.toFixed(2);
-}
-
-function buildHist() {
-  const now = Date.now();
-  const configs = { '1d':{pts:96,ms:900000}, '1w':{pts:168,ms:3600000}, '1m':{pts:120,ms:21600000}, '3m':{pts:90,ms:86400000} };
-  const seed = n => { const x = Math.sin(n*127.1+311.7)*43758.5453; return x-Math.floor(x); };
-  for (const k of Object.keys(configs)) {
-    const {pts,ms} = configs[k];
-    const arr = [];
-    let p = state.open_g;
-    const drift = (state.gram - state.open_g) / pts;
-    for (let i = 0; i < pts; i++) {
-      const ns = seed(i + pts*3);
-      const vol = k==='1d'?2.5:k==='1w'?5:k==='1m'?9:15;
-      p += drift + (ns-0.485)*vol;
-      p = Math.max(state.low_g*0.991, Math.min(state.high_g*1.009, p));
-      arr.push({ t: new Date(now-(pts-i)*ms), v: parseFloat(p.toFixed(2)) });
-    }
-    arr.push({ t: new Date(now), v: parseFloat(state.gram.toFixed(2)) });
-    hist[k] = arr;
-  }
-}
-
-function buildChart(rng) {
-  const data = hist[rng];
-  if (!data) return;
-  const labels = data.map(d => {
-    if (rng==='1d') return d.t.toLocaleTimeString('en-MY',{hour:'2-digit',minute:'2-digit'});
-    if (rng==='1w') return d.t.toLocaleDateString('en-MY',{weekday:'short'})+' '+d.t.getHours().toString().padStart(2,'0')+'h';
-    return d.t.toLocaleDateString('en-MY',{month:'short',day:'numeric'});
-  });
-  const vals = data.map(d => d.v);
-  const isUp = vals[vals.length-1] >= vals[0];
-  const lc = isUp ? '#4CAF72' : '#E05555';
-  const fc = isUp ? 'rgba(76,175,114,0.07)' : 'rgba(224,85,85,0.07)';
-  if (chartInst) chartInst.destroy();
-  chartInst = new Chart(document.getElementById('gc'), {
-    type: 'line',
-    data: { labels, datasets: [{ label:'RM/g', data:vals, borderColor:lc, backgroundColor:fc, borderWidth:1.5, fill:true, tension:0.35, pointRadius:0, pointHoverRadius:4, pointHoverBackgroundColor:lc }] },
-    options: {
-      responsive:true, maintainAspectRatio:false,
-      plugins: { legend:{display:false}, tooltip:{backgroundColor:'#1A1A16',borderColor:'rgba(201,151,42,0.3)',borderWidth:1,titleColor:'#7A7568',bodyColor:'#E8B84B',callbacks:{label:c=>'RM '+c.parsed.y.toFixed(2)+' / gram'}} },
-      scales: {
-        x: { ticks:{color:'#3A3830',font:{size:10},maxTicksLimit:6,autoSkip:true}, grid:{display:false}, border:{color:'#1A1A16'} },
-        y: { ticks:{color:'#3A3830',font:{size:10},callback:v=>'RM'+v.toFixed(0)}, grid:{color:'rgba(255,255,255,0.04)'}, border:{color:'#1A1A16'} }
-      }
-    }
-  });
-}
-
-function setRange(r, el) {
-  range = r;
-  document.querySelectorAll('.ctab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  buildChart(r);
 }
 
 function showToast(msg) {
@@ -1038,25 +938,6 @@ function checkAlerts() {
     }
   });
   if (changed) renderAlerts();
-}
-
-function renderInsights() {
-  const s = state;
-  const sup  = (s.low_g*0.997).toFixed(2), sup2 = (s.low_g*1.004).toFixed(2);
-  const res  = (s.high_g*0.998).toFixed(2), res2 = (s.high_g*1.014).toFixed(2);
-  const pivot = ((s.high_g+s.low_g+s.gram)/3).toFixed(2);
-  const tDir = s.chgPct>=0?'bullish':'bearish';
-  const tStr = Math.abs(s.chgPct)>1.5?'strong':Math.abs(s.chgPct)>0.4?'moderate':'weak';
-  const fxNote = MARKET.usd_myr>=4.0
-    ? `USD/MYR at ${MARKET.usd_myr.toFixed(4)} amplifies gold price movement — each USD 1 move in XAU adds RM ${(MARKET.usd_myr/TROY).toFixed(3)} per gram.`
-    : `A strengthening MYR (sub-4.00) compresses the MYR gold price even if USD spot holds — watch BNM signals.`;
-  const insights = [
-    { cls:'trend', label:'Intraday trend', text:`Price is <strong>${tDir}</strong> today with <strong>${tStr}</strong> momentum (${s.chgPct>=0?'+':''}${s.chgPct.toFixed(2)}%). Opened at RM ${s.open_g.toFixed(2)}, currently ${s.chg>=0?'above':'below'} open. A close above RM ${res}/g confirms continuation; a break below RM ${pivot}/g (pivot) flags fading momentum.` },
-    { cls:'support', label:'Key price levels', text:`Support zone: RM <strong>${sup}–${sup2}</strong>/g. Resistance ceiling: RM <strong>${res}–${res2}</strong>/g. Classic pivot: RM <strong>${pivot}</strong>/g. A sustained break above RM ${res2}/g opens the next leg up; closing below RM ${sup}/g increases downside risk.` },
-    { cls:'macro', label:'Macro context (Jun 2026)', text:`US CPI hit <strong>4.2%</strong> in May 2026 — a 3-year high — negative real rates historically support gold. US-Iran strikes sustaining a geopolitical risk premium. ${fxNote}` }
-  ];
-  document.getElementById('ins').innerHTML = insights.map(i => `
-    <div class="insight"><div class="insight-tag ${i.cls}">${i.label}</div><div class="insight-text">${i.text}</div></div>`).join('');
 }
 
 function refresh() {

@@ -339,7 +339,7 @@ body { min-height: 100vh; overflow-x: hidden; }
 
   <!-- FOOTER -->
   <div class="footer">
-    <div class="footer-note">Data: Au spot (Jun 10 2026) × USD/MYR (Jun 11 2026). Not financial advice.</div>
+    <div class="footer-note" id="footer-note">Waiting for live data…</div>
     <div class="footer-formula">RM/g = (XAU_USD ÷ 31.1035) × USD/MYR</div>
   </div>
 
@@ -879,6 +879,18 @@ function renderMetrics() {
   hc.textContent = sign + s.chg.toFixed(2) + ' (' + sign + s.chgPct.toFixed(2) + '%) today';
   hc.className = 'hero-change ' + (s.chg >= 0 ? 'up' : 'dn');
   document.getElementById('hts').textContent = 'Market data: ' + MARKET.date + ' · Refreshed ' + new Date().toLocaleTimeString('en-MY');
+
+  /* Dynamic Footer - Starts*/
+  const goldTs = MARKET.goldUpdatedAt
+    ? new Date(MARKET.goldUpdatedAt).toLocaleString('en-MY', { day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit', timeZoneName:'short' })
+    : MARKET.date;
+  const fxTs = MARKET.fxUpdatedAt
+    ? new Date(MARKET.fxUpdatedAt).toLocaleString('en-MY', { day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit', timeZoneName:'short' })
+    : MARKET.date;
+  document.getElementById('footer-note').textContent =
+    'Au spot: ' + goldTs + ' · USD/MYR: ' + fxTs + ' · Not financial advice.';
+  /* Dynamic Footer - Ends*/
+  
   const ozMyr = MARKET.xau_usd * MARKET.usd_myr;
   document.getElementById('m-oz').textContent = 'RM ' + ozMyr.toLocaleString('en-MY', {maximumFractionDigits:0});
   document.getElementById('m-oz-usd').textContent = 'USD ' + MARKET.xau_usd.toFixed(2) + ' / oz';
